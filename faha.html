@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fareeha Noor – Luxury Fashion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #c9a87c;
+    --rose-dark: #a8865a;
+    --cream: #faf7f2;
+    --charcoal: #1a1a1a;
+    --mid: #5a5a5a;
+    --light: #e8e0d5;
+    --white: #ffffff;
+    --pink: #f4c2c2;
+    --red: #c0392b;
+    --blue: #2980b9;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Josefin Sans',sans-serif; background:var(--cream); color:var(--charcoal); overflow-x:hidden; }
+
+  /* ─── SPLASH ─── */
+  #splash {
+    position:fixed; inset:0; z-index:9999;
+    background:#1a1a1a;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #splash.hide { opacity:0; visibility:hidden; pointer-events:none; }
+  .splash-logo {
+    text-align:center;
+    animation: splashZoom 1.2s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .splash-logo h1 {
+    font-family:'Cormorant Garamond',serif;
+    font-size: clamp(3rem,10vw,6rem);
+    color:var(--rose);
+    letter-spacing:0.15em;
+    font-weight:300;
+    line-height:1;
+  }
+  .splash-logo p {
+    font-family:'Josefin Sans',sans-serif;
+    color:#888; letter-spacing:0.4em; font-size:0.75rem; font-weight:200;
+    margin-top:8px; text-transform:uppercase;
+  }
+  .splash-line {
+    width:0; height:1px; background:var(--rose); margin:20px auto;
+    animation: lineGrow 1s 0.6s ease forwards;
+  }
+  @keyframes splashZoom {
+    from { opacity:0; transform:scale(0.6); }
+    to   { opacity:1; transform:scale(1); }
+  }
+  @keyframes lineGrow {
+    to { width:200px; }
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position:sticky; top:0; z-index:100;
+    background:rgba(250,247,242,0.95);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--light);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 5%;
+    height:64px;
+  }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.6rem; font-weight:400; color:var(--charcoal); cursor:pointer; letter-spacing:0.05em; }
+  .nav-logo span { color:var(--rose); }
+  .nav-links { display:flex; gap:32px; list-style:none; }
+  .nav-links a { text-decoration:none; color:var(--mid); font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; font-weight:300; cursor:pointer; transition:color 0.3s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--rose); }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+  .hamburger span { width:24px; height:1.5px; background:var(--charcoal); transition:all 0.3s; display:block; }
+  .mobile-menu {
+    display:none; position:fixed; inset:0; z-index:200;
+    background:var(--charcoal);
+    flex-direction:column; align-items:center; justify-content:center; gap:32px;
+  }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:var(--cream); text-decoration:none; font-weight:300; letter-spacing:0.1em; cursor:pointer; transition:color 0.3s; }
+  .mobile-menu a:hover { color:var(--rose); }
+  .mobile-close { position:absolute; top:20px; right:24px; font-size:2rem; color:var(--rose); cursor:pointer; background:none; border:none; }
+
+  /* ─── PAGES ─── */
+  .page { display:none; animation:fadeUp 0.5s ease forwards; }
+  .page.active { display:block; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ─── HOME ─── */
+  .hero {
+    position:relative; overflow:hidden; height:90vh; min-height:500px;
+    display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2520 50%, #1a1a1a 100%);
+  }
+  .hero-bg {
+    position:absolute; inset:0;
+    background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80') center/cover no-repeat;
+    opacity:0.35;
+  }
+  .hero-content { position:relative; text-align:center; color:var(--white); padding:20px; }
+  .hero-content .tag { font-size:0.7rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--rose); font-weight:300; margin-bottom:16px; }
+  .hero-content h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,8vw,6rem); font-weight:300; line-height:1.05; letter-spacing:0.05em; }
+  .hero-content h1 em { color:var(--rose); font-style:italic; }
+  .hero-content p { margin-top:16px; font-size:0.85rem; letter-spacing:0.15em; font-weight:200; color:rgba(255,255,255,0.7); max-width:400px; margin-inline:auto; }
+  .btn { display:inline-block; margin-top:28px; padding:14px 40px; border:1px solid var(--rose); color:var(--rose); font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; font-family:'Josefin Sans',sans-serif; background:transparent; }
+  .btn:hover { background:var(--rose); color:var(--white); }
+  .btn-solid { background:var(--rose); color:var(--white); }
+  .btn-solid:hover { background:var(--rose-dark); border-color:var(--rose-dark); }
+
+  .section { padding:80px 5%; }
+  .section-title { text-align:center; margin-bottom:48px; }
+  .section-title h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,5vw,3rem); font-weight:300; letter-spacing:0.05em; }
+  .section-title p { color:var(--mid); font-size:0.75rem; letter-spacing:0.2em; margin-top:8px; }
+  .divider { width:60px; height:1px; background:var(--rose); margin:12px auto; }
+
+  /* product grid */
+  .product-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:28px; }
+  .product-card {
+    background:var(--white); border-radius:2px; overflow:hidden;
+    cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;
+    box-shadow:0 2px 20px rgba(0,0,0,0.06);
+  }
+  .product-card:hover { transform:translateY(-6px); box-shadow:0 12px 40px rgba(0,0,0,0.12); }
+  .product-img-wrap { position:relative; overflow:hidden; aspect-ratio:3/4; }
+  .product-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
+  .product-card:hover .product-img-wrap img { transform:scale(1.07); }
+  .product-badge { position:absolute; top:12px; left:12px; background:var(--rose); color:var(--white); font-size:0.6rem; letter-spacing:0.2em; padding:4px 10px; text-transform:uppercase; }
+  .product-info { padding:16px; }
+  .product-info h3 { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:400; letter-spacing:0.02em; }
+  .product-info .price { color:var(--rose); font-size:0.85rem; font-weight:600; margin-top:4px; letter-spacing:0.05em; }
+  .color-dots { display:flex; gap:6px; margin-top:8px; }
+  .dot { width:14px; height:14px; border-radius:50%; border:1.5px solid transparent; cursor:pointer; transition:border-color 0.2s; }
+  .dot:hover { border-color:var(--charcoal); }
+
+  /* category strip */
+  .categories { display:flex; gap:12px; overflow-x:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .categories::-webkit-scrollbar { display:none; }
+  .cat-pill { flex-shrink:0; padding:10px 24px; border:1px solid var(--light); font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; white-space:nowrap; background:transparent; font-family:'Josefin Sans',sans-serif; }
+  .cat-pill.active, .cat-pill:hover { background:var(--charcoal); color:var(--white); border-color:var(--charcoal); }
+
+  /* ─── PRODUCTS PAGE ─── */
+  .filter-bar { background:var(--white); padding:24px 5%; border-bottom:1px solid var(--light); display:flex; flex-wrap:wrap; gap:24px; align-items:center; }
+  .filter-group label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); display:block; margin-bottom:8px; }
+  .price-range-wrap { display:flex; flex-direction:column; min-width:200px; }
+  .price-vals { display:flex; justify-content:space-between; font-size:0.75rem; color:var(--rose); font-weight:600; margin-bottom:6px; }
+  input[type=range] { width:100%; accent-color:var(--rose); }
+  .color-filter { display:flex; gap:8px; flex-wrap:wrap; }
+  .color-btn {
+    width:28px; height:28px; border-radius:50%; border:2px solid transparent; cursor:pointer; transition:all 0.2s;
+    position:relative;
+  }
+  .color-btn.active { border-color:var(--charcoal); transform:scale(1.15); }
+  .color-btn.all { background:linear-gradient(135deg,#f4c2c2,#2980b9,#c0392b,#1a1a1a,#fff); }
+  .products-grid-wrap { padding:40px 5%; }
+  .no-results { text-align:center; padding:60px 20px; color:var(--mid); font-size:1.1rem; }
+
+  /* ─── DETAIL PAGE ─── */
+  .detail-wrap { padding:40px 5%; display:grid; grid-template-columns:1fr 1fr; gap:60px; max-width:1100px; margin:0 auto; align-items:start; }
+  .detail-img-wrap { position:relative; overflow:hidden; border-radius:2px; cursor:zoom-in; }
+  .detail-img-wrap img { width:100%; aspect-ratio:3/4; object-fit:cover; transition:transform 0.4s ease; }
+  .detail-img-wrap:hover img { transform:scale(1.08); }
+  .detail-info h1 { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; line-height:1.15; }
+  .detail-info .detail-price { font-size:1.8rem; color:var(--rose); margin:16px 0; font-family:'Cormorant Garamond',serif; }
+  .detail-info p { color:var(--mid); font-size:0.85rem; line-height:1.8; letter-spacing:0.03em; }
+  .color-select-label { font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); margin:20px 0 8px; display:block; }
+  .size-opts { display:flex; gap:8px; flex-wrap:wrap; margin:20px 0; }
+  .size-btn { padding:8px 16px; border:1px solid var(--light); font-size:0.7rem; letter-spacing:0.15em; cursor:pointer; transition:all 0.2s; background:transparent; font-family:'Josefin Sans',sans-serif; }
+  .size-btn.active, .size-btn:hover { background:var(--charcoal); color:var(--white); border-color:var(--charcoal); }
+  .detail-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+  .back-btn { display:inline-flex; align-items:center; gap:8px; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); cursor:pointer; margin-bottom:24px; transition:color 0.2s; background:none; border:none; font-family:'Josefin Sans',sans-serif; padding:0; }
+  .back-btn:hover { color:var(--rose); }
+
+  /* ─── ABOUT ─── */
+  .about-hero { background:var(--charcoal); color:var(--cream); text-align:center; padding:100px 10%; }
+  .about-hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,6vw,4.5rem); font-weight:300; }
+  .about-hero p { margin-top:16px; font-size:0.85rem; letter-spacing:0.1em; color:rgba(255,255,255,0.6); max-width:500px; margin-inline:auto; }
+  .about-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:40px; padding:80px 5%; }
+  .about-card { padding:32px; border:1px solid var(--light); background:var(--white); }
+  .about-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin-bottom:12px; color:var(--rose); }
+  .about-card p { color:var(--mid); font-size:0.85rem; line-height:1.9; }
+  .about-banner { background:url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1400&q=80') center/cover; height:350px; position:relative; }
+  .about-banner-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; }
+  .about-banner-overlay blockquote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:clamp(1.5rem,4vw,2.5rem); color:var(--cream); text-align:center; max-width:700px; padding:20px; line-height:1.4; }
+
+  /* ─── CONTACT ─── */
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; padding:80px 5%; max-width:1100px; margin:0 auto; }
+  .contact-info h2 { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; margin-bottom:24px; }
+  .contact-info p { color:var(--mid); font-size:0.85rem; line-height:1.9; }
+  .contact-detail { margin-top:32px; display:flex; flex-direction:column; gap:16px; }
+  .contact-detail div { display:flex; gap:12px; align-items:flex-start; }
+  .contact-detail .icon { width:36px; height:36px; border:1px solid var(--rose); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0; }
+  .contact-detail span { font-size:0.8rem; color:var(--mid); line-height:1.6; }
+  .social-links { display:flex; gap:12px; margin-top:32px; }
+  .soc-btn { width:42px; height:42px; border:1px solid var(--light); display:flex; align-items:center; justify-content:center; font-size:1.1rem; cursor:pointer; transition:all 0.3s; text-decoration:none; color:var(--charcoal); }
+  .soc-btn:hover { background:var(--rose); color:var(--white); border-color:var(--rose); }
+  .contact-form { display:flex; flex-direction:column; gap:16px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .form-field { display:flex; flex-direction:column; gap:6px; }
+  .form-field label { font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); }
+  .form-field input, .form-field textarea, .form-field select {
+    padding:12px 14px; border:1px solid var(--light); background:var(--white); font-family:'Josefin Sans',sans-serif; font-size:0.85rem; color:var(--charcoal); outline:none; transition:border-color 0.2s; border-radius:0;
+  }
+  .form-field input:focus, .form-field textarea:focus { border-color:var(--rose); }
+  .form-field textarea { min-height:120px; resize:vertical; }
+  .form-success { display:none; text-align:center; padding:20px; color:var(--rose); font-size:0.9rem; letter-spacing:0.1em; border:1px solid var(--rose); }
+
+  /* ─── FOOTER ─── */
+  footer { background:var(--charcoal); color:rgba(255,255,255,0.5); padding:40px 5%; text-align:center; font-size:0.75rem; letter-spacing:0.1em; }
+  footer .f-logo { font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--rose); font-weight:300; margin-bottom:8px; }
+  footer p { margin-top:16px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width:768px) {
+    .nav-links { display:none; }
+    .hamburger { display:flex; }
+    .detail-wrap { grid-template-columns:1fr; gap:30px; }
+    .contact-grid { grid-template-columns:1fr; gap:40px; }
+    .form-row { grid-template-columns:1fr; }
+    .section { padding:60px 4%; }
+    .filter-bar { gap:16px; }
+    .price-range-wrap { min-width:100%; }
+  }
+  @media (max-width:480px) {
+    .hero { height:75vh; }
+    .product-grid { grid-template-columns:repeat(2, 1fr); gap:14px; }
+    .about-grid { padding:40px 4%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-logo">
+    <p>Est. 2020</p>
+    <div class="splash-line"></div>
+    <h1>Fareeha Noor</h1>
+    <div class="splash-line"></div>
+    <p>Luxury Women's Fashion · Pakistan</p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Fareeha <span>Noor</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('products')" id="nav-products">Shop</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a onclick="showPage('home');toggleMenu()">Home</a>
+  <a onclick="showPage('products');toggleMenu()">Shop</a>
+  <a onclick="showPage('about');toggleMenu()">About</a>
+  <a onclick="showPage('contact');toggleMenu()">Contact</a>
+</div>
+
+<!-- ═══════════ HOME ═══════════ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="tag">New Collection 2025</p>
+      <h1>Dress With<br><em>Confidence</em></h1>
+      <p>Luxury Pakistani women's fashion, crafted with elegance and grace</p>
+      <button class="btn" onclick="showPage('products')">Explore Collection</button>
+    </div>
+  </div>
+
+  <!-- Categories -->
+  <div class="section" style="padding-bottom:0">
+    <div class="section-title">
+      <h2>Shop By Style</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="categories" id="homeCategories">
+      <button class="cat-pill active" onclick="filterCategory('all',this)">All Styles</button>
+      <button class="cat-pill" onclick="filterCategory('kurta',this)">Kurta</button>
+      <button class="cat-pill" onclick="filterCategory('shalwar',this)">Shalwar Kameez</button>
+      <button class="cat-pill" onclick="filterCategory('lawn',this)">Lawn</button>
+      <button class="cat-pill" onclick="filterCategory('formal',this)">Formal</button>
+      <button class="cat-pill" onclick="filterCategory('casual',this)">Casual</button>
+    </div>
+  </div>
+
+  <!-- Featured Products -->
+  <div class="section">
+    <div class="section-title">
+      <h2>Featured Collection</h2>
+      <p>HANDPICKED FOR YOU</p>
+      <div class="divider"></div>
+    </div>
+    <div class="product-grid" id="featuredGrid"></div>
+    <div style="text-align:center;margin-top:40px">
+      <button class="btn" onclick="showPage('products')">View All Products</button>
+    </div>
+  </div>
+
+  <!-- Banner -->
+  <div style="background:#1a1a1a;padding:80px 5%;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;text-align:center;">
+    <div>
+      <div style="font-size:2rem;color:var(--rose);margin-bottom:8px">✦</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:1.4rem;font-weight:300">Handcrafted</h3>
+      <p style="color:#888;font-size:0.75rem;margin-top:6px;letter-spacing:0.1em">Every piece made with care</p>
+    </div>
+    <div>
+      <div style="font-size:2rem;color:var(--rose);margin-bottom:8px">✦</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:1.4rem;font-weight:300">Free Delivery</h3>
+      <p style="color:#888;font-size:0.75rem;margin-top:6px;letter-spacing:0.1em">Orders above Rs. 2000</p>
+    </div>
+    <div>
+      <div style="font-size:2rem;color:var(--rose);margin-bottom:8px">✦</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:1.4rem;font-weight:300">Easy Returns</h3>
+      <p style="color:#888;font-size:0.75rem;margin-top:6px;letter-spacing:0.1em">7-day hassle-free returns</p>
+    </div>
+    <div>
+      <div style="font-size:2rem;color:var(--rose);margin-bottom:8px">✦</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:1.4rem;font-weight:300">100% Original</h3>
+      <p style="color:#888;font-size:0.75rem;margin-top:6px;letter-spacing:0.1em">Authentic premium fabric</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PRODUCTS ═══════════ -->
+<div class="page" id="page-products">
+  <div style="background:var(--charcoal);padding:60px 5%;text-align:center">
+    <h1 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:clamp(2rem,5vw,3.5rem);font-weight:300">Our Collection</h1>
+    <p style="color:var(--rose);font-size:0.7rem;letter-spacing:0.3em;margin-top:8px">WOMEN'S FASHION · PAKISTAN</p>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-group price-range-wrap">
+      <label>Price Range</label>
+      <div class="price-vals">
+        <span>Rs. 1000</span>
+        <span id="priceVal">Rs. 3000</span>
+      </div>
+      <input type="range" min="1000" max="3000" value="3000" step="100" id="priceFilter" oninput="applyFilters()">
+    </div>
+    <div class="filter-group">
+      <label>Color</label>
+      <div class="color-filter">
+        <button class="color-btn all active" title="All" onclick="selectColor('all',this)" style="background:conic-gradient(from 0deg,#f4c2c2,#2980b9,#c0392b,#1a1a1a,#fff,#f4c2c2)"></button>
+        <button class="color-btn" title="Black" onclick="selectColor('black',this)" style="background:#1a1a1a"></button>
+        <button class="color-btn" title="White" onclick="selectColor('white',this)" style="background:#fff;border:1px solid #ddd"></button>
+        <button class="color-btn" title="Pink" onclick="selectColor('pink',this)" style="background:#f4c2c2"></button>
+        <button class="color-btn" title="Blue" onclick="selectColor('blue',this)" style="background:#2980b9"></button>
+        <button class="color-btn" title="Red" onclick="selectColor('red',this)" style="background:#c0392b"></button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label>Category</label>
+      <div class="categories" style="flex-wrap:wrap">
+        <button class="cat-pill active" onclick="filterProdCat('all',this)">All</button>
+        <button class="cat-pill" onclick="filterProdCat('kurta',this)">Kurta</button>
+        <button class="cat-pill" onclick="filterProdCat('shalwar',this)">Shalwar Kameez</button>
+        <button class="cat-pill" onclick="filterProdCat('lawn',this)">Lawn</button>
+        <button class="cat-pill" onclick="filterProdCat('formal',this)">Formal</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="products-grid-wrap">
+    <div class="product-grid" id="allProductsGrid"></div>
+    <div class="no-results" id="noResults" style="display:none">No products match your filters. Try adjusting.</div>
+  </div>
+</div>
+
+<!-- ═══════════ DETAIL ═══════════ -->
+<div class="page" id="page-detail">
+  <div style="padding:24px 5% 0">
+    <button class="back-btn" onclick="goBack()">← Back to Shop</button>
+  </div>
+  <div class="detail-wrap" id="detailContent"></div>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <p style="font-size:0.7rem;letter-spacing:0.4em;color:var(--rose);margin-bottom:12px">OUR STORY</p>
+    <h1>Fareeha Noor</h1>
+    <p>Born in Pakistan, inspired by grace — we create fashion that celebrates the modern Pakistani woman.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>Our Vision</h3>
+      <p>At Fareeha Noor, we believe every woman deserves to feel beautiful, confident, and uniquely herself. Our designs blend traditional Pakistani elegance with contemporary silhouettes.</p>
+    </div>
+    <div class="about-card">
+      <h3>Our Craft</h3>
+      <p>Every garment is thoughtfully crafted using premium fabrics sourced from across Pakistan. From delicate lawn prints to rich formal wear, quality is never compromised.</p>
+    </div>
+    <div class="about-card">
+      <h3>Our Promise</h3>
+      <p>Affordable luxury. We price our collections between Rs.1000–Rs.3000 so every woman can experience the elegance of Fareeha Noor without breaking the bank.</p>
+    </div>
+  </div>
+  <div class="about-banner">
+    <div class="about-banner-overlay">
+      <blockquote>"Fashion is not just clothing — it is how you tell the world who you are."</blockquote>
+    </div>
+  </div>
+  <div style="padding:80px 5%;max-width:800px;margin:0 auto;text-align:center">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:20px">Founded with Love in Sindh, Pakistan</h2>
+    <p style="color:var(--mid);font-size:0.9rem;line-height:2">Fareeha Noor was founded in 2020 by a passionate team of designers who grew up admiring the rich textile heritage of Pakistan. From the bustling markets of Sukkur to the fashion runways of Karachi, our brand brings that spirit of beauty to every Pakistani home. Today, we serve thousands of women across the country, delivering style, comfort, and elegance right to their doorstep.</p>
+    <button class="btn btn-solid" style="margin-top:32px" onclick="showPage('contact')">Get In Touch</button>
+  </div>
+</div>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<div class="page" id="page-contact">
+  <div style="background:var(--charcoal);padding:60px 5%;text-align:center">
+    <h1 style="font-family:'Cormorant Garamond',serif;color:var(--cream);font-size:clamp(2rem,5vw,3.5rem);font-weight:300">Get In Touch</h1>
+    <p style="color:var(--rose);font-size:0.7rem;letter-spacing:0.3em;margin-top:8px">WE'D LOVE TO HEAR FROM YOU</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h2>Hello, Beautiful!</h2>
+      <p>Whether you have a question about our collection, need help with sizing, or want to collaborate — we're just a message away. Our team responds within 24 hours.</p>
+      <div class="contact-detail">
+        <div>
+          <div class="icon">📍</div>
+          <span>Shop #12, Fashion Market,<br>Sukkur, Sindh, Pakistan</span>
+        </div>
+        <div>
+          <div class="icon">📞</div>
+          <span>+92 300 1234567<br>Mon – Sat, 10am – 7pm</span>
+        </div>
+        <div>
+          <div class="icon">✉️</div>
+          <span>hello@fareehanoor.pk<br>info@fareehanoor.pk</span>
+        </div>
+      </div>
+      <div class="social-links" style="margin-top:28px">
+        <a class="soc-btn" href="#" title="Instagram">📸</a>
+        <a class="soc-btn" href="#" title="Facebook">📘</a>
+        <a class="soc-btn" href="#" title="WhatsApp">💬</a>
+        <a class="soc-btn" href="#" title="TikTok">🎵</a>
+      </div>
+    </div>
+    <div>
+      <form class="contact-form" onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <label>First Name</label>
+            <input type="text" placeholder="Ayesha" required>
+          </div>
+          <div class="form-field">
+            <label>Last Name</label>
+            <input type="text" placeholder="Khan" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-field">
+          <label>Phone</label>
+          <input type="tel" placeholder="+92 300 0000000">
+        </div>
+        <div class="form-field">
+          <label>Subject</label>
+          <select>
+            <option>General Inquiry</option>
+            <option>Order Issue</option>
+            <option>Size Help</option>
+            <option>Wholesale</option>
+            <option>Collaboration</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Message</label>
+          <textarea placeholder="How can we help you?"></textarea>
+        </div>
+        <button type="submit" class="btn btn-solid" style="width:100%;border:none;padding:16px;font-size:0.75rem;letter-spacing:0.25em;cursor:pointer">Send Message</button>
+        <div class="form-success" id="formSuccess">✦ Thank you! We'll be in touch soon. ✦</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Fareeha Noor</div>
+  <p style="font-size:0.65rem;letter-spacing:0.2em;color:var(--rose)">LUXURY WOMEN'S FASHION · PAKISTAN</p>
+  <p style="margin-top:16px">© 2025 Fareeha Noor. All rights reserved. | Sukkur, Sindh, Pakistan</p>
+</footer>
+
+<script>
+// ─── DATA ───
+const products = [
+  { id:1, name:"Rose Garden Kurta", price:1299, colors:["pink","white"], category:"kurta", badge:"New",
+    img:"https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&q=80",
+    desc:"A delicate floral kurta in premium lawn fabric. Perfect for casual and semi-formal occasions. Features intricate embroidery on the neckline." },
+  { id:2, name:"Midnight Shalwar Set", price:2499, colors:["black","blue"], category:"shalwar", badge:"Bestseller",
+    img:"https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&q=80",
+    desc:"Elegant midnight shalwar kameez with subtle thread work. Crafted from silk-blend fabric for a luxurious drape and feel." },
+  { id:3, name:"Crimson Formal Suit", price:2999, colors:["red","black"], category:"formal", badge:"Premium",
+    img:"https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?w=600&q=80",
+    desc:"A statement formal suit in deep crimson. Rich embroidery and a flowing silhouette make this perfect for weddings and events." },
+  { id:4, name:"Pearl White Lawn", price:1199, colors:["white","pink"], category:"lawn", badge:"Sale",
+    img:"https://images.unsplash.com/photo-1614251056798-0a63eda2bb25?w=600&q=80",
+    desc:"Light, breathable lawn fabric in pearl white. Ideal for summer days with a relaxed yet stylish look." },
+  { id:5, name:"Sapphire Blue Kurta", price:1599, colors:["blue","white"], category:"kurta", badge:"",
+    img:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&q=80",
+    desc:"Vibrant sapphire blue kurta with delicate mirror work. A modern design rooted in traditional aesthetics." },
+  { id:6, name:"Casual Chic Co-ord", price:1899, colors:["pink","red"], category:"casual", badge:"Trending",
+    img:"https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?w=600&q=80",
+    desc:"A coordinated casual set in soft pastel tones. Comfortable cotton blend fabric great for everyday wear." },
+  { id:7, name:"Classic Black Formal", price:2799, colors:["black"], category:"formal", badge:"",
+    img:"https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80",
+    desc:"Timeless black formal ensemble with gold embroidery. A wardrobe essential for every elegant Pakistani woman." },
+  { id:8, name:"Blossom Lawn 3-Piece", price:2199, colors:["pink","white","blue"], category:"lawn", badge:"New",
+    img:"https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80",
+    desc:"Complete 3-piece lawn set with printed dupatta and embroidered shirt. Ready-to-wear elegance for any occasion." },
+  { id:9, name:"Ruby Red Shalwar", price:1799, colors:["red","black"], category:"shalwar", badge:"",
+    img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+    desc:"Bold ruby red shalwar kameez with contrasting black details. Perfect for festive gatherings and celebrations." },
+  { id:10, name:"Ocean Blue Casual", price:1099, colors:["blue","white"], category:"casual", badge:"Budget Pick",
+    img:"https://images.unsplash.com/photo-1583744946564-b52ac1c389c8?w=600&q=80",
+    desc:"A breezy ocean-blue casual kurta. Soft cotton fabric makes it your go-to for relaxed weekend outings." },
+  { id:11, name:"Ivory Wedding Suit", price:2899, colors:["white","pink"], category:"formal", badge:"Exclusive",
+    img:"https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80",
+    desc:"Luxurious ivory bridal-inspired suit with heavy embroidery. The epitome of Pakistani elegance." },
+  { id:12, name:"Poppy Lawn Print", price:1349, colors:["red","pink","white"], category:"lawn", badge:"",
+    img:"https://images.unsplash.com/photo-1507680434567-5739c80be1ac?w=600&q=80",
+    desc:"Cheerful poppy print lawn in vibrant shades. Light and airy for warm Pakistan weather." }
+];
+
+const colorDotMap = { black:"#1a1a1a", white:"#f5f5f5", pink:"#f4c2c2", blue:"#2980b9", red:"#c0392b" };
+
+let currentPage = "home";
+let prevPage = "products";
+let activeColor = "all";
+let activePrice = 3000;
+let activeProdCat = "all";
+
+// ─── SPLASH ───
+window.addEventListener("load", () => {
+  setTimeout(() => { document.getElementById("splash").classList.add("hide"); }, 3000);
+});
+
+// ─── NAV ───
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".nav-links a").forEach(a => a.classList.remove("active"));
+  if (page !== "detail") prevPage = currentPage;
+  currentPage = page;
+  const el = document.getElementById("page-" + page);
+  el.classList.add("active");
+  const navEl = document.getElementById("nav-" + page);
+  if (navEl) navEl.classList.add("active");
+  window.scrollTo(0,0);
+  if (page === "products") renderAllProducts();
+  if (page === "home") renderFeatured();
+}
+
+function toggleMenu() {
+  document.getElementById("mobileMenu").classList.toggle("open");
+}
+
+function goBack() {
+  showPage(prevPage);
+}
+
+// ─── RENDER ───
+function colorDots(colors) {
+  return colors.map(c => `<div class="dot" style="background:${colorDotMap[c]||'#ccc'}" title="${c}"></div>`).join("");
+}
+
+function productCard(p, onclick) {
+  return `
+    <div class="product-card" onclick="${onclick}">
+      <div class="product-img-wrap">
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ""}
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+      </div>
+      <div class="product-info">
+        <h3>${p.name}</h3>
+        <div class="price">Rs. ${p.price.toLocaleString()}</div>
+        <div class="color-dots">${colorDots(p.colors)}</div>
+      </div>
+    </div>`;
+}
+
+function renderFeatured() {
+  const featured = products.slice(0,8);
+  document.getElementById("featuredGrid").innerHTML = featured.map(p => productCard(p, `openDetail(${p.id})`)).join("");
+}
+
+function renderAllProducts() {
+  let filtered = products.filter(p => {
+    const priceOk = p.price <= activePrice;
+    const colorOk = activeColor === "all" || p.colors.includes(activeColor);
+    const catOk = activeProdCat === "all" || p.category === activeProdCat;
+    return priceOk && colorOk && catOk;
+  });
+  const grid = document.getElementById("allProductsGrid");
+  const none = document.getElementById("noResults");
+  if (filtered.length === 0) { grid.innerHTML = ""; none.style.display = "block"; }
+  else { none.style.display = "none"; grid.innerHTML = filtered.map(p => productCard(p, `openDetail(${p.id})`)).join(""); }
+}
+
+// ─── FILTERS ───
+function applyFilters() {
+  activePrice = parseInt(document.getElementById("priceFilter").value);
+  document.getElementById("priceVal").textContent = "Rs. " + activePrice.toLocaleString();
+  renderAllProducts();
+}
+
+function selectColor(color, btn) {
+  document.querySelectorAll("#page-products .color-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  activeColor = color;
+  renderAllProducts();
+}
+
+function filterCategory(cat, btn) {
+  document.querySelectorAll("#homeCategories .cat-pill").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+function filterProdCat(cat, btn) {
+  document.querySelectorAll("#page-products .cat-pill").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  activeProdCat = cat;
+  renderAllProducts();
+}
+
+// ─── DETAIL ───
+function openDetail(id) {
+  prevPage = currentPage;
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
+  currentPage = "detail";
+  const sizes = ["XS","S","M","L","XL","XXL"];
+  document.getElementById("detailContent").innerHTML = `
+    <div class="detail-img-wrap">
+      <img src="${p.img}" alt="${p.name}">
+    </div>
+    <div class="detail-info">
+      ${p.badge ? `<span style="font-size:0.65rem;letter-spacing:0.2em;color:var(--rose);text-transform:uppercase">${p.badge}</span>` : ""}
+      <h1>${p.name}</h1>
+      <div class="detail-price">Rs. ${p.price.toLocaleString()}</div>
+      <p>${p.desc}</p>
+      <span class="color-select-label">Available Colors</span>
+      <div class="color-dots" style="gap:10px">
+        ${p.colors.map(c => `<div class="dot" style="width:22px;height:22px;background:${colorDotMap[c]};border:2px solid transparent;cursor:pointer" title="${c}" onclick="this.parentNode.querySelectorAll('.dot').forEach(d=>d.style.borderColor='transparent');this.style.borderColor='var(--charcoal)'"></div>`).join("")}
+      </div>
+      <span class="color-select-label" style="margin-top:20px">Select Size</span>
+      <div class="size-opts">
+        ${sizes.map((s,i) => `<button class="size-btn${i===2?' active':''}" onclick="this.parentNode.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">${s}</button>`).join("")}
+      </div>
+      <p style="font-size:0.75rem;color:var(--rose);margin-top:8px">Category: <span style="color:var(--mid);text-transform:capitalize">${p.category}</span></p>
+      <div class="detail-actions">
+        <button class="btn btn-solid" style="border:none;cursor:pointer;flex:1" onclick="alert('Added to cart! 🛍️')">Add to Cart</button>
+        <button class="btn" style="cursor:pointer" onclick="alert('Order on WhatsApp! 💬')">WhatsApp Order</button>
+      </div>
+      <p style="font-size:0.75rem;color:#aaa;margin-top:16px;letter-spacing:0.05em">✦ Free delivery on orders above Rs.2000 &nbsp;|&nbsp; 7-day returns</p>
+    </div>`;
+  document.getElementById("page-detail").classList.add("active");
+  window.scrollTo(0,0);
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById("formSuccess").style.display = "block";
+  e.target.reset();
+  setTimeout(() => document.getElementById("formSuccess").style.display = "none", 4000);
+}
+
+// init
+renderFeatured();
+</script>
+</body>
+</html>
